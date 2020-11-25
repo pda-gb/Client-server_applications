@@ -9,6 +9,3 @@ for itm in words:
         print(f'[{itm}] is {type(itm)}')
     except SyntaxError:
         print("невозможно записать в байтовом типе с помощью маркировки b''")
-
-
-

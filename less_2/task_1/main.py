@@ -39,7 +39,9 @@ os_code_list, os_type_list. В этой же функции создать гл�
 import csv
 import os
 import re
+
 from chardet import detect
+
 
 def get_unicode_file(_file):
     """переводим файлы в utf-8"""
@@ -54,6 +56,7 @@ def get_unicode_file(_file):
                 file.close()
 
     return _file
+
 
 def get_data():
     """ собираем данные из файлов и формируем список из этих данных"""
@@ -104,10 +107,12 @@ def get_data():
 
     return main_data
 
+
 def write_to_csv(_file):
     data_to_write = get_data()
     with open(_file, 'w', encoding='utf-8') as file_to_write:
         file_writer = csv.writer(file_to_write, quoting=csv.QUOTE_NONNUMERIC)
         file_writer.writerows(data_to_write)
+
 
 write_to_csv('my_report.csv')

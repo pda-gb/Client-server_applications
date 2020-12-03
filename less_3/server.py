@@ -2,20 +2,44 @@ import json
 import socket
 import sys
 
-from less_3.common.utils import get_message, control_of_protocol_compliance, send_message
-from less_3.common.variables import DEFAULT_PORT, DEFAULT_IP_ADDRESS,\
-    MAX_CONNECTIONS
+from less_3.common.utils import get_message, send_message
+from less_3.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION,\
+    PRESENCE, TIME, ACCOUNT_NAME, USER, RESPONSE, ERROR
 
+
+def control_of_protocol_compliance(message_of_client):
+    """
+    Проверка на соответствие протоколу  сообщения от клиента.
+    Возвращает результат проверки, для дальнейшей отправки клиенту.
+    """
+    if message_of_client[ACTION] == PRESENCE and message_of_client[TIME] and \
+            message_of_client[USER][ACCOUNT_NAME] == 'Guest':
+        return {RESPONSE: 200}
+    return {
+        RESPONSE: 400,
+        ERROR: 'Request is not compliance to protocol'
+    }
 
 
 def main():
     # запуск сервера с заданными параметрами или по дефолту.
-    # пример: server.py -p XXXX -a XXX.XXX.XXX.XXX
+    # пример: server.py -a XXX.XXX.XXX.XXX -p XXXX
     # с помощью sys.argv парсим параметры по ключам
+    #  -a XXX.XXX.XXX.XXX
+    try:
+        if ('-a' or '--address') in sys.argv:
+            ip_for_client_connect = int(sys.argv[sys.argv.index
+                                                 ('-a' or '--address') + 1])
+        else:
+            ip_for_client_connect = ''
+    except IndexError:
+        print('После ключа -а не указан номер ip для подключения клиента')
+        sys.exit(1)
     #  -p XXXX
     try:
-        if '-p' in sys.argv:
-            port_for_client_connect = int(sys.argv[sys.argv.index('-p') + 1])
+        if ('-p' or '--port') in sys.argv:
+            port_for_client_connect = int(sys.argv[sys.argv.index
+                                                   ('-p' or '--port') + 1])
             if 1024 > port_for_client_connect or port_for_client_connect > \
                     65535:
                 raise ValueError
@@ -26,15 +50,6 @@ def main():
         sys.exit(1)
     except ValueError:
         print('Порт д.б. в диапазоне 1024-65535')
-        sys.exit(1)
-    #  -a XXX.XXX.XXX.XXX
-    try:
-        if '-a' in sys.argv:
-            ip_for_client_connect = int(sys.argv[sys.argv.index('-a') + 1])
-        else:
-            ip_for_client_connect = DEFAULT_IP_ADDRESS
-    except IndexError:
-        print('После ключа -а не указан номер ip для подключения клиента')
         sys.exit(1)
 
     # создаём сокет, соединяемся, слушаем
@@ -47,7 +62,7 @@ def main():
         client, address_of_client = client_connect.accept()
         try:
             # приём сообщения
-            message_of_client = get_message(client_connect)
+            message_of_client = get_message(client)
             print(f'приято сообщение от клиента:{message_of_client}\n')
             #  и проверка его на соответствие протоколу JIM
             response_to_client = control_of_protocol_compliance(
@@ -59,5 +74,6 @@ def main():
             print(f'Некорректное сообщение  от клиента [{address_of_client}]')
             client.close()
 
-if __name__ == 'main':
+
+if __name__ == '__main__':
     main()

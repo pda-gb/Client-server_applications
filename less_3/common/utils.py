@@ -1,8 +1,7 @@
 """Утилиты"""
 import json
 
-from less_3.common.variables import MAX_PACKAGE_LENGTH, ENCODING, ACTION, \
-    ACCOUNT_NAME, PRESENCE, TIME, USER, RESPONSE, ERROR
+from less_3.common.variables import MAX_PACKAGE_LENGTH, ENCODING
 
 
 def get_message(_sock):
@@ -21,24 +20,8 @@ def get_message(_sock):
 
 
 def send_message(_sock, _message_dict):
-    """
-    Кодирует в байты и отправляет сообщение
-    """
+    """Кодирует в байты и отправляет сообщение"""
 
     message_as_json = json.dumps(_message_dict)
     message_as_byte = message_as_json.encode(ENCODING)
     _sock.send(message_as_byte)
-
-
-def control_of_protocol_compliance(message_of_client):
-    """
-    Проверка на соответствие протоколу  сообщения от клиента.
-    Возвращает результат проверки, для дальнейшей отправки клиенту.
-    """
-    if message_of_client[ACTION] == PRESENCE and message_of_client[TIME] and \
-            message_of_client[USER][ACCOUNT_NAME] == 'Guest':
-        return {RESPONSE: 200}
-    return {
-        RESPONSE: 400,
-        ERROR: 'Request is not compliance to protocol'
-    }

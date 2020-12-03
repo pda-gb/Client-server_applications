@@ -40,19 +40,22 @@ def main():
     # с помощью sys.argv парсим параметры по ключам
     #  -a XXX.XXX.XXX.XXX
     try:
-        if ('-a' or '--address') in sys.argv:
+        if '-a' in sys.argv:
             ip_for_server_connect = int(sys.argv[sys.argv.index
-                                                 ('-a' or '--address') + 1])
+                                                 ('-a') + 1])
         else:
             ip_for_server_connect = DEFAULT_IP_ADDRESS
+        #  --- заготовка ---
+        # port_for_client_connect, ip_for_client_connect = \
+        # find_connections_parameters(client)
     except IndexError:
         print('После ключа -а не указан номер ip для подключения к серверу')
         sys.exit(1)
     #  -p XXXX
     try:
-        if ('-p' or '--port') in sys.argv:
+        if '-p' in sys.argv:
             port_for_server_connect = int(sys.argv[sys.argv.index
-                                                   ('-p' or '--port') + 1])
+                                                   ('-p') + 1])
             if 1024 > port_for_server_connect or port_for_server_connect > \
                     65535:
                 raise ValueError

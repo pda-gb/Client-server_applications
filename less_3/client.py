@@ -8,7 +8,7 @@ from less_3.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, PR
     RESPONSE, ERROR
 
 
-def create_massage_a_persense(_account='Guest'):
+def create_massage_a_presence(_account='Guest'):
     """
     Создаёт сообщение о присутствии клиента в сети, по умолчанию c аккантом -
     Гость.
@@ -73,7 +73,7 @@ def main():
     server_connect.connect((ip_for_server_connect, port_for_server_connect))
 
     # создаём и отправляем сообщение о присутствии серверу
-    message_to_server = create_massage_a_persense()
+    message_to_server = create_massage_a_presence()
     send_message(server_connect, message_to_server)
 
     try:

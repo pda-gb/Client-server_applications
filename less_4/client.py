@@ -4,11 +4,11 @@ import sys
 import time
 
 from less_3.common.utils import send_message, get_message
-from less_3.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, \
-    RESPONSE, ERROR
+from less_3.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
+    PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
 
 
-def create_massage_a_persense(_account='Guest'):
+def create_massage_a_presence(_account='Guest'):
     """
     Создаёт сообщение о присутствии клиента в сети, по умолчанию c аккантом -
     Гость.
@@ -29,7 +29,7 @@ def parsing_response(_server_response):
     if RESPONSE in _server_response:
         if _server_response[RESPONSE] == 200:
             return 'code : 200. OK, you are connected.'
-        return f'code : {_server_response[RESPONSE]}. Error:' \
+        return f'code :{_server_response[RESPONSE]}. Error: ' \
                f'{_server_response[ERROR]}'
     raise ValueError
 
@@ -73,7 +73,7 @@ def main():
     server_connect.connect((ip_for_server_connect, port_for_server_connect))
 
     # создаём и отправляем сообщение о присутствии серверу
-    message_to_server = create_massage_a_persense()
+    message_to_server = create_massage_a_presence()
     send_message(server_connect, message_to_server)
 
     try:

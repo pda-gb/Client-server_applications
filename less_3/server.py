@@ -12,7 +12,8 @@ def control_of_protocol_compliance(message_of_client):
     Проверка на соответствие протоколу  сообщения от клиента.
     Возвращает результат проверки, для дальнейшей отправки клиенту.
     """
-    if message_of_client[ACTION] == PRESENCE and message_of_client[TIME] and \
+    if ACTION in message_of_client and message_of_client[ACTION] == PRESENCE \
+            and message_of_client[TIME] and \
             message_of_client[USER][ACCOUNT_NAME] == 'Guest':
         return {RESPONSE: 200}
     return {

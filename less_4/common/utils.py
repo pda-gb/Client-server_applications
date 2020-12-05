@@ -1,6 +1,5 @@
 """Утилиты"""
 import json
-import sys
 
 from less_3.common.variables import MAX_PACKAGE_LENGTH, ENCODING
 
@@ -26,7 +25,6 @@ def send_message(_sock, _message_dict):
     message_as_json = json.dumps(_message_dict)
     message_as_byte = message_as_json.encode(ENCODING)
     _sock.send(message_as_byte)
-
 
 # def find_connections_parameters(_str):
 #     """

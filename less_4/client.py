@@ -3,8 +3,8 @@ import socket
 import sys
 import time
 
-from less_3.common.utils import send_message, get_message
-from less_3.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
+from less_4.common.utils import send_message, get_message
+from less_4.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
     PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
 
 

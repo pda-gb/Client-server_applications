@@ -2,8 +2,8 @@ import json
 import socket
 import sys
 
-from less_3.common.utils import get_message, send_message
-from less_3.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION, \
+from less_4.common.utils import get_message, send_message
+from less_4.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION, \
     PRESENCE, TIME, ACCOUNT_NAME, USER, RESPONSE, ERROR, DEFAULT_IP_ADDRESS
 
 

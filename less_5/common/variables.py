@@ -1,3 +1,6 @@
+# from logging import DEBUG as LOGGING_DEBUG
+from logging import ERROR as LOGGING_ERROR
+
 """Константы"""
 
 # Порт по умолчанию для сетевого ваимодействия
@@ -12,6 +15,9 @@ MAX_CONNECTIONS = 10
 MAX_PACKAGE_LENGTH = 2048
 # Кодировка проекта
 ENCODING = 'utf-8'
+# Задание уровна логирования
+LOGGER_LEVEL = LOGGING_ERROR
+
 
 #=====================================
 

@@ -6,10 +6,15 @@ from sys import stderr
 from less_5.common.variables import LOGGER_LEVEL
 
 # +++ определяем путь файла для логирования +++
-# сменяем папку на 1 шаг выше и переходим в logs
-chdir('../logs')
+# если запускаем конфинг напрямую, то сменяем папку на 1 шаг выше
+if __name__ == '__main__':
+    chdir(pardir)
+# получаем путь
 path_to_app = getcwd()
-path_to_app = path.join(path_to_app, 'client.log')
+if __name__ == '__main__':  # если запускаем конфинг напрямую
+    path_to_app = path.join(path_to_app, 'logs', 'client.log')
+else:
+    path_to_app = path.join(path_to_app, 'log', 'logs', 'client.log')
 
 # +++ задаём формат логов +++
 format_msg = Formatter('%(asctime)s %(levelname)s %(filename)s '

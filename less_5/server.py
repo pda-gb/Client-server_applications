@@ -13,8 +13,8 @@ def control_of_protocol_compliance(message_of_client):
     Возвращает результат проверки, для дальнейшей отправки клиенту.
     """
     if ACTION in message_of_client and message_of_client[ACTION] == PRESENCE \
-            and TIME in message_of_client and TIME is float \
-            and USER in message_of_client and \
+            and TIME in message_of_client and type(message_of_client[TIME]) is\
+            float and USER in message_of_client and \
             message_of_client[USER][ACCOUNT_NAME] == 'Guest':
         return {RESPONSE: 200}
     return {

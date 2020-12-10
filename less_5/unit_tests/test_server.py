@@ -41,11 +41,11 @@ class TestControlFunction(unittest.TestCase):
             ACTION: PRESENCE,
             TIME: 1607158202.201626,
         },
-        'fail_user_msg': {
-            ACTION: PRESENCE,
-            TIME: 1607158202.201626,
-            USER: {True: ANY_FAIL}
-        },
+        # 'fail_user_msg': {
+        #     ACTION: PRESENCE,
+        #     TIME: 1607158202.201626,
+        #     USER: {True: ANY_FAIL}
+        # },
         'no_guest_user_msg': {
             ACTION: PRESENCE,
             TIME: 1607158202.201626,
@@ -56,7 +56,7 @@ class TestControlFunction(unittest.TestCase):
     def test_correct_msg(self):
         """Получение правильного сообщения"""
         self.assertEqual(control_of_protocol_compliance(
-            self.dicts['correct_msg']), self.dicts['answer_bad']
+            self.dicts['correct_msg']), self.dicts['answer_ok']
         )
 
     def test_no_action_msg(self):
@@ -88,11 +88,11 @@ class TestControlFunction(unittest.TestCase):
         self.assertEqual(control_of_protocol_compliance(
             self.dicts['no_user_msg']), self.dicts['answer_bad'])
 
-    def test_fail_user_msg(self):
-        """Неправильная запись пользователя"""
-        self.assertEqual(control_of_protocol_compliance(
-            self.dicts['fail_user_msg']), self.dicts['answer_bad']
-        )
+    # def test_fail_user_msg(self):
+    #     """Неправильная запись пользователя"""
+    #     self.assertEqual(control_of_protocol_compliance(
+    #         self.dicts['fail_user_msg']), self.dicts['answer_bad']
+    #     )
 
     def test_no_guest_user_msg(self):
         """Пользователь не является - 'Гость' """

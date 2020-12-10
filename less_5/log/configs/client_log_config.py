@@ -23,7 +23,8 @@ format_msg = Formatter('%(asctime)s %(levelname)s %(filename)s '
 
 # +++ обработчик потока логов +++
 handler_log_file = logging.handlers.TimedRotatingFileHandler(path_to_app,
-                                                             encoding='utf8',
+                                                             encoding='utf-8',
+                                                             backupCount=10,
                                                              interval=1,
                                                              when='D')
 handler_log_file.setFormatter(format_msg)

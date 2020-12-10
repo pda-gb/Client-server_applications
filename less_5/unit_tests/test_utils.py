@@ -1,8 +1,8 @@
 import json
 import unittest
 
-from less_4.common.utils import send_message, get_message
-from less_4.common.variables import ENCODING, ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
+from less_5.common.utils import send_message, get_message
+from less_5.common.variables import ENCODING, ACTION, PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
 
 
 class DummySocket:

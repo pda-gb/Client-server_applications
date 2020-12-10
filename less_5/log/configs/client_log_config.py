@@ -1,6 +1,6 @@
 import logging.handlers
 from logging import Formatter, getLogger
-from os import chdir, getcwd, path
+from os import chdir, getcwd, path, pardir
 from sys import stderr
 
 from less_5.common.variables import LOGGER_LEVEL

@@ -58,7 +58,7 @@ while True:
                                                         f'{port} {address}',
                                                         shell=True))
             print('готово!')
-            continue
+            # continue
         else:
             pass
     # "убить" все сервера

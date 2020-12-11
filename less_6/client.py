@@ -10,6 +10,8 @@ from less_5.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
     PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
 
 # Инициализация логирования клиента.
+from less_6.errors import EmptyOrFailDataRecv
+
 LOGGER = getLogger('client')
 
 
@@ -98,8 +100,10 @@ def main():
         response_of_server = parsing_response(get_message(server_connect))
         print(response_of_server)
     except(ValueError, json.JSONDecodeError):
-        print('Непрвильные данные/Не удалось декодировать данные.')
-        LOGGER.critical('Непрвильные данные/Не удалось декодировать данные.')
+        print('Не удалось декодировать данные.')
+        LOGGER.critical('Не удалось декодировать данные.')
+    except EmptyOrFailDataRecv:
+        LOGGER.error('Из сокета получено пустое или неправильное сообщение')
 
 
 if __name__ == '__main__':

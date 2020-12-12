@@ -1,9 +1,9 @@
 import json
 import socket
 import sys
-import less_5.log.configs.server_log_config
-from less_5.common.utils import get_message, send_message
-from less_5.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION, \
+import less_6.log.configs.server_log_config
+from less_6.common.utils import get_message, send_message
+from less_6.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION, \
     PRESENCE, TIME, ACCOUNT_NAME, USER, RESPONSE, ERROR, DEFAULT_IP_ADDRESS
 
 

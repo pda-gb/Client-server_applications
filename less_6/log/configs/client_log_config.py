@@ -3,7 +3,7 @@ from logging import Formatter, getLogger
 from os import chdir, getcwd, path, pardir
 from sys import stderr
 
-from less_5.common.variables import LOGGER_LEVEL
+from less_6.common.variables import LOGGER_LEVEL
 
 # +++ определяем путь файла для логирования +++
 # если запускаем конфинг напрямую, то сменяем папку на 1 шаг выше

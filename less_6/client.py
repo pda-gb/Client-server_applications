@@ -1,12 +1,15 @@
+import inspect
 import json
 import socket
 import sys
 import time
-import less_5.log.configs.client_log_config
+import traceback
+
+import less_6.log.configs.client_log_config
 from logging import getLogger
 
-from less_5.common.utils import send_message, get_message
-from less_5.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
+from less_6.common.utils import send_message, get_message
+from less_6.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
     PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
 
 # Инициализация логирования клиента.
@@ -14,7 +17,20 @@ from less_6.errors import EmptyOrFailDataRecv
 
 LOGGER = getLogger('client')
 
+def log(decorated_func):
+    """Декоратор"""
+    def log_wrap(*args, **kwargs):
+        """Обертка"""
+        result = decorated_func(*args, **kwargs)
+        LOGGER.debug(f'Функция {decorated_func.__name__} c параметрами {args},'
+                     f' {kwargs}. \n'
+                     f'Вызов из модуля {decorated_func.__module__} из '
+                     f'функции {traceback.format_stack()[0].strip().split()[-1]}.\n'
+                     f'Вызов из функции {inspect.stack()[1][3]}')
+        return result
+    return log_wrap
 
+@log
 def create_massage_a_presence(_account='Guest'):
     """
     Создаёт сообщение о присутствии клиента в сети, по умолчанию c аккантом -
@@ -27,15 +43,16 @@ def create_massage_a_presence(_account='Guest'):
             ACCOUNT_NAME: _account
         }
     }
-    LOGGER.debug(f'Создание сообщения о присутствии от клиента: '
+    # LOGGER.debug(f'Создание сообщения о присутствии от клиента: '
                  f'{_message}')
     return _message
 
 
+@log
 def parsing_response(_server_response):
     """разбор ответа сервера"""
 
-    LOGGER.debug(f'разбор ответа сервера: {_server_response}')
+    # LOGGER.debug(f'разбор ответа сервера: {_server_response}')
     if RESPONSE in _server_response:
         if _server_response[RESPONSE] == 200:
             return 'code : 200. OK, you are connected.'

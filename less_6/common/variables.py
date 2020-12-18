@@ -1,8 +1,8 @@
-from logging import DEBUG as LOGGING_DEBUG
-from logging import INFO as LOGGING_INFO
-from logging import WARNING as LOGGING_WARNING
-from logging import ERROR as LOGGING_ERROR
-from logging import CRITICAL as LOGGING_CRITICAL
+from logging import DEBUG as LOGGING_LEVEL_DEBUG
+from logging import INFO as LOGGING_LEVEL_INFO
+from logging import WARNING as LOGGING_LEVEL_WARNING
+from logging import ERROR as LOGGING_LEVEL_ERROR
+from logging import CRITICAL as LOGGING_LEVEL_CRITICAL
 
 """Константы"""
 
@@ -19,7 +19,7 @@ MAX_PACKAGE_LENGTH = 2048
 # Кодировка проекта
 ENCODING = 'utf-8'
 # Задание уровна логирования
-LOGGER_LEVEL = LOGGING_DEBUG
+LOGGER_LEVEL = LOGGING_LEVEL_DEBUG
 
 
 #=====================================

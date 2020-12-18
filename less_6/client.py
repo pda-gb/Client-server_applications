@@ -4,31 +4,44 @@ import socket
 import sys
 import time
 import traceback
-
+# import less_6.log.configs.client_log_config - должна быть для
+# инициализации логирования
 import less_6.log.configs.client_log_config
 from logging import getLogger
 
 from less_6.common.utils import send_message, get_message
 from less_6.common.variables import DEFAULT_IP_ADDRESS, DEFAULT_PORT, ACTION, \
     PRESENCE, TIME, USER, ACCOUNT_NAME, RESPONSE, ERROR
-
-# Инициализация логирования клиента.
 from less_6.errors import EmptyOrFailDataRecv
 
+# Инициализация логирования клиента.
 LOGGER = getLogger('client')
 
+
+# декоратор на функции
 def log(decorated_func):
-    """Декоратор"""
+    """Декоратор - пример использования для дебаг-логирования функций"""
+
     def log_wrap(*args, **kwargs):
         """Обертка"""
         result = decorated_func(*args, **kwargs)
-        LOGGER.debug(f'Функция {decorated_func.__name__} c параметрами {args},'
-                     f' {kwargs}. \n'
+        LOGGER.debug(f'\n+ + +\nСообщение: {decorated_func.__doc__}\n+ + +\n'
+                     f'Функция {decorated_func.__name__} c параметрами '
+                     f'{args}, {kwargs}. \n'
                      f'Вызов из модуля {decorated_func.__module__} из '
-                     f'функции {traceback.format_stack()[0].strip().split()[-1]}.\n'
+                     f'функции '
+                     f'{traceback.format_stack()[0].strip().split()[-1]}\n'
                      f'Вызов из функции {inspect.stack()[1][3]}')
+
+        # traceback, inspect - помогают через логирование узнать имя
+        # функции, модуля откуда вызвана логируемая функция.
         return result
+
+    # для сообщения от конкретной точки для лога сначала получим описание
+    # логируемой функции и передадим в качестве доп. сообщения
+    log_wrap.__doc__ = decorated_func.__doc__
     return log_wrap
+
 
 @log
 def create_massage_a_presence(_account='Guest'):
@@ -44,7 +57,7 @@ def create_massage_a_presence(_account='Guest'):
         }
     }
     # LOGGER.debug(f'Создание сообщения о присутствии от клиента: '
-                 f'{_message}')
+    #             f'{_message}')
     return _message
 
 

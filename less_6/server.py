@@ -1,30 +1,58 @@
+import inspect
 import json
 import socket
 import sys
+import traceback
+# import less_6.log.configs.server_log_config - должна быть для
+# инициализации логирования
 import less_6.log.configs.server_log_config
+from logging import getLogger
+
 from less_6.common.utils import get_message, send_message
 from less_6.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION, \
     PRESENCE, TIME, ACCOUNT_NAME, USER, RESPONSE, ERROR, DEFAULT_IP_ADDRESS
-
-
-from logging import getLogger
-
-# Инициализация логирования сервера.
 from less_6.errors import EmptyOrFailDataRecv
 
+
+# Инициализация логирования сервера.
 LOGGER = getLogger('server')
 
 
+# декоратор на классе
+class Log():
+    """Декоратор - пример использования для дебаг-логирования функций"""
+
+    def __call__(self, decorated_func):
+        def log_wrap(*args, **kwargs):
+            """Обертка"""
+            result = decorated_func(*args, **kwargs)
+            LOGGER.debug(f'\n+ + +\nСообщение: {decorated_func.__doc__}'
+                         f'\n+ + +\n'
+                         f'Функция {decorated_func.__name__} c параметрами '
+                         f'{args}, {kwargs}. \n'
+                         f'Вызов из модуля {decorated_func.__module__} из '
+                         f'функции '
+                         f'{traceback.format_stack()[0].strip().split()[-1]}\n'
+                         f'Вызов из функции {inspect.stack()[1][3]}')
+
+            # traceback, inspect - помогают через логирование узнать имя
+            # функции, модуля откуда вызвана логируемая функция.
+            return result
+
+        return log_wrap
+
+
+@Log()
 def control_of_protocol_compliance(message_of_client):
     """
     Проверка на соответствие протоколу  сообщения от клиента.
     Возвращает результат проверки, для дальнейшей отправки клиенту.
     """
-    LOGGER.debug(f'Проверка на соответствие протоколу  сообщения '
-                 f'от клиента: {message_of_client}')
+    # LOGGER.debug(f'Проверка на соответствие протоколу  сообщения '
+    #              f'от клиента: {message_of_client}')
 
     if ACTION in message_of_client and message_of_client[ACTION] == PRESENCE \
-            and TIME in message_of_client and type(message_of_client[TIME]) is\
+            and TIME in message_of_client and type(message_of_client[TIME]) is \
             float and USER in message_of_client and \
             message_of_client[USER][ACCOUNT_NAME] == 'Guest':
         return {RESPONSE: 200}

@@ -1,8 +1,8 @@
 import unittest
 
-from less_5.common.variables import RESPONSE, ERROR, ACTION, PRESENCE, TIME, \
+from less_6.common.variables import RESPONSE, ERROR, ACTION, PRESENCE, TIME, \
     USER, ACCOUNT_NAME
-from less_5.server import control_of_protocol_compliance
+from less_6.server import control_of_protocol_compliance
 
 
 class TestControlFunction(unittest.TestCase):

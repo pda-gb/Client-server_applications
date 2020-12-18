@@ -1,7 +1,7 @@
 import unittest
 
-from less_5.client import create_massage_a_presence, parsing_response
-from less_5.common.variables import RESPONSE, ERROR, TIME, ACTION, PRESENCE, \
+from less_6.client import create_massage_a_presence, parsing_response
+from less_6.common.variables import RESPONSE, ERROR, TIME, ACTION, PRESENCE, \
     ACCOUNT_NAME, USER
 
 

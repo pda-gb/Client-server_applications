@@ -1,10 +1,12 @@
 import os
 import subprocess
 import sys
+from os.path import dirname
 
 all_servers = []
 all_clients = []
-work_dir = os.path.abspath(os.curdir)
+# полный текущий путь заущенного скрипта launcher
+work_dir = dirname(os.path.abspath(__file__))
 while True:
     ask = input('Выход - q, запустить сервер и клиент - x, '
                 'завершить работу серверов - w, завершить работу клиентов - e,'
@@ -30,35 +32,38 @@ while True:
             address = ''
         else:
             address = f'-a {address}'
+        ask = None
+
         # запуск сервера ------
         # для linux .CREATE_NEW_CONSOLE не работает
         if sys.platform == 'Windows':
-            subprocess.Popen(f'python server.py {port} {address}',
+            subprocess.Popen(f'python {work_dir}\server.py {port} {address}',
                              creationflags=subprocess.CREATE_NEW_CONSOLE)
         else:
-            all_servers.append(subprocess.Popen(f'python server.py {port} '
-                                                f'{address}', shell=True))
-            # command = f'x-terminal-emulator -e {sys.executable} -c ' \
-            #           f'{work_dir}/server.py {port} {address}'.split()
-            # subprocess.check_call(command)
+            all_servers.append(
+                subprocess.Popen(f'x-terminal-emulator -e python '
+                                 f'{work_dir}/server.py {port} {address}',
+                                 shell=True)
+            )
+
         # запуск клиента ------
         count_client = int(input('Укажите какое количество клиентов '
                                  'запустить(0-20)\n'))
-        if count_client != 0:  # не запускать клиент
+        if count_client != 0:  # запускать клиенты, если их больше 0
             for i in range(count_client):
                 # для linux .CREATE_NEW_CONSOLE не работает
                 if sys.platform == 'Windows':
-                    subprocess.Popen(f'python client.py {port} {address}',
-                                     creationflags=subprocess.
-                                     CREATE_NEW_CONSOLE)
+                    subprocess.Popen(f'python {work_dir}\client.py {port} '
+                                     f'{address}',
+                                     creationflags=
+                                     subprocess.CREATE_NEW_CONSOLE)
                 else:
-                    # subprocess.run(f'x-terminal-emulator -e {sys.executable}'
-                    #                f' -c client.py {port} {address}'.split())
-                    all_clients.append(subprocess.Popen(f'python client.py '
-                                                        f'{port} {address}',
-                                                        shell=True))
+                    all_clients.append(
+                        subprocess.Popen(f'x-terminal-emulator -e python '
+                                         f'{work_dir}/client.py {port} '
+                                         f'{address}', shell=True)
+                    )
             print('готово!')
-            # continue
         else:
             pass
     # "убить" все сервера

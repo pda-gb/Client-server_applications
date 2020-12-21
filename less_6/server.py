@@ -5,14 +5,12 @@ import sys
 import traceback
 # import less_6.log.configs.server_log_config - должна быть для
 # инициализации логирования
-import less_6.log.configs.server_log_config
 from logging import getLogger
 
 from less_6.common.utils import get_message, send_message
 from less_6.common.variables import DEFAULT_PORT, MAX_CONNECTIONS, ACTION, \
     PRESENCE, TIME, ACCOUNT_NAME, USER, RESPONSE, ERROR, DEFAULT_IP_ADDRESS
 from less_6.errors import EmptyOrFailDataRecv
-
 
 # Инициализация логирования сервера.
 LOGGER = getLogger('server')
@@ -52,8 +50,8 @@ def control_of_protocol_compliance(message_of_client):
     #              f'от клиента: {message_of_client}')
 
     if ACTION in message_of_client and message_of_client[ACTION] == PRESENCE \
-            and TIME in message_of_client and type(message_of_client[TIME]) is \
-            float and USER in message_of_client and \
+            and TIME in message_of_client and USER in message_of_client and \
+            type(message_of_client[TIME]) is float and \
             message_of_client[USER][ACCOUNT_NAME] == 'Guest':
         return {RESPONSE: 200}
     return {
@@ -115,7 +113,6 @@ def main():
             # приём сообщения
             message_of_client = get_message(client)
             LOGGER.debug(f'принято сообщение от клиента:{message_of_client}\n')
-            # print(f'принято сообщение от клиента:{message_of_client}\n')
             #  и проверка его на соответствие протоколу JIM
             response_to_client = control_of_protocol_compliance(
                 message_of_client)

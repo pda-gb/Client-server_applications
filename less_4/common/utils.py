@@ -1,7 +1,7 @@
 """Утилиты"""
 import json
 
-from less_3.common.variables import MAX_PACKAGE_LENGTH, ENCODING
+from less_4.common.variables import MAX_PACKAGE_LENGTH, ENCODING
 
 
 def get_message(_sock):

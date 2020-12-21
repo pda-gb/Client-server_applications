@@ -5,6 +5,7 @@ import sys
 import traceback
 # import less_6.log.configs.server_log_config - должна быть для
 # инициализации логирования
+import less_6.log.configs.server_log_config
 from logging import getLogger
 
 from less_6.common.utils import get_message, send_message

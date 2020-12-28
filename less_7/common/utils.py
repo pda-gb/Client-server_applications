@@ -10,13 +10,18 @@ def get_message(_sock):
     """
 
     response_as_byte = _sock.recv(MAX_PACKAGE_LENGTH)
-    if isinstance(response_as_byte, bytes):
-        response_as_json = response_as_byte.decode(ENCODING)
-        response = json.loads(response_as_json)
-        if isinstance(response, dict):
-            return response
+    if response_as_byte != b'':
+        if isinstance(response_as_byte, bytes):
+            response_as_json = response_as_byte.decode(ENCODING)
+            response = json.loads(response_as_json)
+            if isinstance(response, dict):
+                return response
+            raise ValueError
         raise ValueError
-    raise ValueError
+    else:
+        #  Клиент в режиме listen, после приёма сообщения юзера, будет
+        #  получать - '', в результате вывалится ошибка JSONDecodeError
+        pass
 
 
 def send_message(_sock, _message_dict):
@@ -26,32 +31,6 @@ def send_message(_sock, _message_dict):
     message_as_byte = message_as_json.encode(ENCODING)
     _sock.send(message_as_byte)
 
-# def find_connections_parameters(_str):
-#     """
-#     Ищет ключи в коммандной строке запуска приложения, которым задаётся
-#     порт и адресс подключения
-#     _str - указывает для какого приложения(server/client)
-#     """
-#     key_port = ''
-#     key_address = ''
-#     if '-p' in sys.argv:
-#         key_port = '-p'
-#         port = int(sys.argv[sys.argv.index(key_port) + 1])
-#     if '--port' in sys.argv:
-#         key_port = '--port'
-#         port = int(sys.argv[sys.argv.index(key_port) + 1])
-#
-#     if '-a' in sys.argv:
-#         key_address = '-a'
-#         address = int(sys.argv[sys.argv.index(key_address) + 1])
-#     if '--address' in sys.argv:
-#         key_address = '--address'
-#         address = int(sys.argv[sys.argv.index(key_address) + 1])
-#
-#     # если не найдено, то поумолчанию
-#     port = DEFAULT_PORT
-#     if _str == 'server':
-#         address = DEFAULT_IP_ADDRESS_FOR_LISTEN
-#     if _str == 'client':
-#         address = DEFAULT_IP_ADDRESS
-#     return {'port': port, 'address': address}
+
+def find_connections_parameters(_str):
+    pass

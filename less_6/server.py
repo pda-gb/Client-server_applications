@@ -72,9 +72,6 @@ def main():
                                                  ('-a') + 1])
         else:
             ip_for_client_connect = DEFAULT_IP_ADDRESS
-        #  --- заготовка ---
-        # port_for_client_connect, ip_for_client_connect = \
-        # find_connections_parameters(server)
     except IndexError:
         print('После ключа -а не указан номер ip для подключения клиента')
         LOGGER.error('После ключа -а не указан номер ip для подключения '

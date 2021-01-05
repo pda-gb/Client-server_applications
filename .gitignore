@@ -235,3 +235,5 @@ cython_debug/
 # Used by previous versions of JEnv
 .jenv-version
 
+.logs/*
+
